@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d %p %logger [%t] %m%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/logs/phone-api.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d %p %logger [%t] %m%n</Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>/logs/phone-api.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!-- LOG everything at INFO level -->
+    <root level="info">
+        <appender-ref ref="Console" />
+    </root>
+
+    <logger name="org.springframework.security" level="error" additivity="false">
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+    <logger name="org.springframework.web.servlet.mvc" level="error" additivity="false">
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="debug" additivity="false">
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+    <logger name="org.springframework" level="error" additivity="false">
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+    <logger name="org.hibernate.SQL" level="error" additivity="false">
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+    <logger name="org.hibernate.type" level="error" additivity="false">
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+    <logger name="org.hibernate.stat" level="error" additivity="false">
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+    <logger name="au.com.belong" level="debug" additivity="false">
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+</configuration>

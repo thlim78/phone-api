@@ -1,0 +1,2 @@
+spring.liquibase.enabled: false
+belong.api.key: '123456789'

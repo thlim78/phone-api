@@ -1,0 +1,47 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--Added the entity customer-->
+    <changeSet id="202501031249" author="Tom">
+        <createTable tableName="customer">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="customer_pk" nullable="false" />
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_updated" type="timestamp"/>
+            <column name="version" type="bigint(19)"/>
+        </createTable>
+    </changeSet>
+
+    <!--Added the entity phone-->
+    <changeSet id="202501031250" author="Tom">
+        <createTable tableName="phone">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="phone_pk"  nullable="false" />
+            </column>
+            <column name="customer_id" type="uuid">
+                <constraints nullable="false" />
+            </column>
+            <column name="number" type="varchar(30)"/>
+            <column name="status" type="varchar(30)"/>
+            <column name="date_created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_updated" type="timestamp"/>
+            <column name="version" type="bigint(19)"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="phone"
+                                 constraintName="fk_phone_customer"
+                                 referencedColumnNames="id"
+                                 referencedTableName="customer"
+                                 validate="true"/>
+    </changeSet>
+</databaseChangeLog>

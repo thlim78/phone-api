@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="tom.lim" id="201904201339" runAlways="true">
+        <sql dbms="h2">
+            SET REFERENTIAL_INTEGRITY FALSE
+        </sql>
+    </changeSet>
+
+    <!--Added the entity customer-->
+    <changeSet id="202501031251" author="Tom" runOnChange="true" context="seed">
+        <delete tableName="phone"/>
+        <delete tableName="customer"/>
+
+        <loadData tableName="customer" file="/db/datasets/customer.csv">
+            <column name="id" header="id" type="uuid"/>
+            <column name="first_name" header="first_name" type="string"/>
+            <column name="last_name" header="last_name" type="string"/>
+            <column name="date_created" header="date_created" type="datetime"/>
+            <column name="last_updated" header="last_updated" type="datetime"/>
+            <column name="version" header="version" type="numeric"/>
+        </loadData>
+
+        <loadData tableName="phone" file="/db/datasets/phone.csv">
+            <column name="id" header="id" type="uuid"/>
+            <column name="customer_id" header="customer_id" type="uuid"/>
+            <column name="number" header="number" type="string"/>
+            <column name="status" header="status" type="string"/>
+            <column name="date_created" header="date_created" type="datetime"/>
+            <column name="last_updated" header="last_updated" type="datetime"/>
+            <column name="version" header="version" type="numeric"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet author="tom.lim" id="201904201341" runAlways="true" failOnError="true" runInTransaction="true">
+        <sql dbms="h2">
+            SET REFERENTIAL_INTEGRITY TRUE;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
